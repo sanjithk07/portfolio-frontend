@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Messages</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #111;
+      color: #fff;
+      padding: 20px;
+    }
+    .card {
+      background: #1a1a1a;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      border: 1px solid #333;
+    }
+  </style>
+</head>
+<body>
+
+<h2>📬 Messages Received</h2>
+
+<div id="messagesContainer">Loading...</div>
+
+<script>
+async function loadMessages() {
+  const res = await fetch('http://localhost:5000/api/messages');
+  const messages = await res.json();
+
+  const container = document.getElementById('messagesContainer');
+  container.innerHTML = '';
+
+  messages.forEach(msg => {
+    container.innerHTML += `
+      <div class="card">
+        <h3>${msg.name}</h3>
+        <p><b>Email:</b> ${msg.email}</p>
+        <p>${msg.message}</p>
+      </div>
+    `;
+  });
+}
+
+loadMessages();
+</script>
+
+</body>
+</html>
